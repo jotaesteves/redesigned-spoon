@@ -1,0 +1,62 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: #f3bc05;
+$primary-invert: findColorInvert($primary);
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+    "white": ($white, $black),
+    "black": ($black, $white),
+    "light": ($light, $light-invert),
+    "dark": ($dark, $dark-invert),
+    "primary": ($primary, $primary-invert),
+    "info": ($info, $info-invert),
+    "success": ($success, $success-invert),
+    "warning": ($warning, $warning-invert),
+    "danger": ($danger, $danger-invert),
+    "twitter": ($twitter, $twitter-invert)
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+// backgrounds
+$light-yellow: #faf9f3;
+$button-yellow: #DCA94D;
+$dark-yellow: #A8772B;
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.button {
+    background-color: white;
+    color: $button-yellow;
+    border: 1px solid $button-yellow;
+
+    &.active{
+        background-color: $button-yellow;
+        color: white;
+        border: none;
+    }
+}
