@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Users from '../views/Users.vue'
 
 Vue.use(VueRouter)
 
@@ -8,22 +7,20 @@ const routes = [
   {
     path: '/',
     name: 'Users',
-    component: Users
+    component: () =>
+    import(/* webpackChunkName: "users" */ '../views/Users.vue')
   },
   {
     path: '/list',
     name: 'RandomList',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/RandomList.vue')
+      import(/* webpackChunkName: "randomlist" */ '../views/RandomList.vue')
   },
   {
     path: "/user/:id",
     name: "User",
     components: () =>
-      import("../components/User.vue")
+      import(/* webpackChunkName: "user" */ '../components/User.vue')
   }
 ]
 

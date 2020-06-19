@@ -18,21 +18,22 @@ import UserService from '@/services/userService';
 import HttpService from '@/services/httpService';
 
 export default {
-    data() {
-        return {
-            routeParam: this.$route.params.id
-        };
-    },
-    methods: {
-        getUsers () {
-            UserService.getUser({ page: this.page })
-                .then(({
-                    data: {
-                        data,
-                        page,
-                        per_page,
-                        total_pages
-                } }) => {
+  name: 'User',
+  data() {
+    return {
+      routeParam: this.$route.params.id
+    };
+  },
+  methods: {
+    getUsers () {
+      UserService.getUser({ page: this.page })
+        .then(({
+          data: {
+            data,
+            page,
+            per_page,
+            total_pages
+          } }) => {
           this.users = data
 
           this.page = page

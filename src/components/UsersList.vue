@@ -23,72 +23,58 @@
     </router-link>
 
     <b-pagination
-      :total="total_pages"
-      :current.sync="page"
-      :range-before="1"
-      :range-after="1"
+      :total="total"
+      :current.sync="current"
+      range-before="3"
+      range-after="3"
       order="asc"
-      :per-page="per_page"
+      :per-page="perPage"
       icon-prev='chevron-left'
       icon-next='chevron-right'
       aria-next-label="Next page"
       aria-previous-label="Previous page"
       aria-page-label="Page"
       aria-current-label="Current page"
-      @change="handleData"
+      @change="changePage"
     >
     </b-pagination>
   </div>
 </template>
 
 <script>
-import UserService from '@/services/userService'
-import HttpService from '@/services/httpService'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'UsersList',
   data () {
     return {
-      users: '',
-      page: 1,
-      per_page: 0,
-      per_page_options: [5, 10, 15],
-      total_pages: 0,
+      current: 1,
+      total: 50,
+      perPage: 20,
     }
   },
   mounted () {
     this.handleData()
   },
+  computed: {
+    ...mapGetters('user', [
+      'users',
+      'total_pages',
+      'per_page',
+      'page'
+    ])
+  },
   methods: {
+    ...mapActions('user',['getUsers, setPage']),
 
     handleData () {
-      this.getUsers();
+      this.$store.dispatch('user/getUsers')
     },
 
-    getUsers () {
-      UserService.getUsers({ page: this.page })
-        .then(({
-          data: {
-            data,
-            page,
-            per_page,
-            total_pages
-          } }) => {
-          this.users = data
-
-          this.page = page
-          this.per_page = per_page
-          this.total_pages = total_pages
-        })
-        .catch((err) => {
-          HttpService.handleHttpError(this, err)
-        })
-    },
-
-    formatDate (date) {
-      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      let _date = new Date(date);
-      return `${months[_date.getMonth()]} ${_date.getFullYear()}`
+    changePage (page) {
+      console.log(page)
+      console.log(this.setPage)
+      this.$store.dispatch('user/setPage', page)
     }
   },
 };

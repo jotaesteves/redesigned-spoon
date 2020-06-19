@@ -1,4 +1,6 @@
 import * as types from './mutationTypes'
+import UserService from '../services/userService'
+import HttpService from '../services/httpService'
 
 const state = {
     users: [],
@@ -12,24 +14,42 @@ const state = {
 }
 
 const mutations = {
-    [types.SET_USERS](state, response) {
-        state.users = response.data.data
-        state.pagination.page = response.data.page
-        state.pagination.per_page = response.data.per_page
-        state.pagination.total_pages = response.data.total_pages
+    [types.SET_USERS](state, data) {
+        state.users = data.data
+        state.pagination.page = data.page
+        state.pagination.per_page = data.per_page
+        state.pagination.total_pages = data.total_pages
     },
+    [types.SET_PAGE](state, page) {
+        state.pagination.page = page
+    }
 }
 
 const getters = {
-    getUsers: state => state.users,
-    getTotalPages: state => state.pagination.total_pages,
+    users: state => state.users,
+    total_pages: state => state.pagination.total_pages,
+    page: state => state.pagination.page,
+    per_page: state => state.pagination.per_page,
 
 }
 
 const actions = {
-    setUser(store, data) {
-        store.commit(types.SET_USER, data)
+    getUsers (store) {
+        UserService.getUsers({ page: store.state.pagination.page })
+            .then((response) => {
+                console.log(response)
+                store.commit(types.SET_USERS, response.data)
+            })
+            .catch((err) => {
+                HttpService.handleHttpError(this, err)
+            })
+    },
+
+    setPage ({commit, dispatch}, page) {
+        commit(types.SET_PAGE, page)
+        dispatch('getUsers')
     }
+
 }
 
 export default {
