@@ -4,6 +4,7 @@
     <div
       class="user__item"
     >
+    <h1> USER TEST</h1>
         <img :src="user.avatar">
         <h1>{{ user.first_name }}</h1>
         <h1>{{ user.last_name }}</h1>

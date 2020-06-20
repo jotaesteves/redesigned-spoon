@@ -1,91 +1,93 @@
 <template>
-  <!-- USERS -->
-  <div class="users">
-    <router-link
-      v-for="user in users"
-      :to="{ path: '/user/' + user.id }"
-      class="users__link"
-      :key="user.id"
-    >
-      <div class="users__item">
-        <div class="users__item--image">
-          <img
-            :src="user.avatar"
-            alt
-            height="100"
-          />
+  <div>
+    <!-- USERS -->
+    <div class="users">
+      <router-link
+        v-for="user in users"
+        :to="{ path: '/user/' + user.id }"
+        class="users__link"
+        :key="user.id"
+      >
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by4">
+              <img :src="user.avatar" />
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <p class="title is-6">{{ user.first_name }} {{ user.last_name }}</p>
+              <p class="subtitle is-7">{{ user.email }}</p>
+            </div>
+          </div>
         </div>
-        <div class="users__item__body">
-          <p class="users__item--title">{{ user.first_name }} {{ user.last_name }}</p>
-          <p class="users__item--title">{{ user.email }} </p>
-        </div>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
 
     <b-pagination
-      :total="total"
-      :current.sync="current"
+      class="pagination"
+      :total="per_page*total_pages"
+      :current.sync="page"
       range-before="3"
       range-after="3"
       order="asc"
-      :per-page="perPage"
-      icon-prev='chevron-left'
-      icon-next='chevron-right'
+      :per-page="per_page"
+      :icon-prev="prevIcon"
+      :icon-next="nextIcon"
       aria-next-label="Next page"
       aria-previous-label="Previous page"
       aria-page-label="Page"
       aria-current-label="Current page"
       @change="changePage"
-    >
-    </b-pagination>
+    ></b-pagination>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'UsersList',
-  data () {
+  name: "UsersList",
+  data() {
     return {
-      current: 1,
-      total: 50,
-      perPage: 20,
-    }
+      prevIcon: 'chevron-left',
+      nextIcon: 'chevron-right'
+    };
   },
-  mounted () {
-    this.handleData()
+  mounted() {
+    this.handleData();
   },
   computed: {
-    ...mapGetters('user', [
-      'users',
-      'total_pages',
-      'per_page',
-      'page'
-    ])
+    ...mapGetters("user", [
+        "users",
+        "total_pages",
+        "per_page",
+        "page"
+      ])
   },
   methods: {
-    ...mapActions('user',['getUsers, setPage']),
-
-    handleData () {
-      this.$store.dispatch('user/getUsers')
+    handleData() {
+      this.$store.dispatch("user/getUsers");
     },
 
-    changePage (page) {
-      console.log(page)
-      console.log(this.setPage)
-      this.$store.dispatch('user/setPage', page)
+    changePage(page) {
+      this.$store.dispatch("user/setPage", page);
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss">
-.client {
-  &__item {
-    &--image {
-      max-width: 50px;
+  .card {
+    width: 14rem;
+    margin: 2rem auto;
+    &:hover{
+      background-color: #42b983;
+      color: white;
     }
   }
-}
+
+  .pagination {
+    margin-bottom: 20px;
+  }
 </style>

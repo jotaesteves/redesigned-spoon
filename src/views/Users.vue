@@ -19,3 +19,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+  h1 {
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+</style>

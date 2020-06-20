@@ -1,11 +1,11 @@
 import * as types from './mutationTypes'
-import UserService from '../services/userService'
+import UnknowService from '../services/unknowService'
 import HttpService from '../services/httpService'
 import Vue from 'vue'
 
 const state = {
-    users: [],
-    user: [],
+    random_list: [],
+    random_item: [],
     pagination: {
         page: 0,
         per_page: 0,
@@ -15,8 +15,8 @@ const state = {
 }
 
 const mutations = {
-    [types.SET_USERS](state, data) {
-        state.users = data.data
+    [types.SET_RANDOM_LIST](state, data) {
+        state.random_list = data.data
         state.pagination.page = data.page
         state.pagination.per_page = data.per_page
         state.pagination.total_pages = data.total_pages
@@ -27,7 +27,7 @@ const mutations = {
 }
 
 const getters = {
-    users: state => state.users,
+    random_list: state => state.random_list,
     total_pages: state => state.pagination.total_pages,
     page: state => state.pagination.page,
     per_page: state => state.pagination.per_page,
@@ -35,10 +35,10 @@ const getters = {
 }
 
 const actions = {
-    getUsers (store) {
-        UserService.getUsers({ page: store.state.pagination.page })
+    getRandomList (store) {
+        UnknowService.getRandomList({ page: store.state.pagination.page })
             .then((response) => {
-                store.commit(types.SET_USERS, response.data)
+                store.commit(types.SET_RANDOM_LIST, response.data)
             })
             .catch((err) => {
                 HttpService.handleHttpError(Vue, err)
@@ -47,7 +47,7 @@ const actions = {
 
     setPage ({commit, dispatch}, page) {
         commit(types.SET_PAGE, page)
-        dispatch('getUsers')
+        dispatch('getRandomList')
     }
 
 }
