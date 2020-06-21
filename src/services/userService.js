@@ -7,6 +7,6 @@ export default class UserService {
     }
 
     static async getUser(id) {
-        return HttpService.get(`user/${id}`)
+        return HttpService.get(`users/${id}`)
     }
 }

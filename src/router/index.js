@@ -14,13 +14,19 @@ const routes = [
     path: '/list',
     name: 'RandomList',
     component: () =>
-      import(/* webpackChunkName: "randomlist" */ '../views/RandomList.vue')
+      import(/* webpackChunkName: "random-list" */ '../views/RandomList.vue')
   },
   {
     path: "/user/:id",
     name: "UserPage",
-    components: () =>
+    component: () =>
       import(/* webpackChunkName: "user" */ '../components/UserPage.vue')
+  },
+  {
+    path: "/unknown/:id",
+    name: "RandomPage",
+    component: () =>
+      import(/* webpackChunkName: "user" */ '../components/RandomPage.vue')
   }
 ]
 

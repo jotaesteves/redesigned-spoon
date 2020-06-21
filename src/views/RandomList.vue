@@ -1,20 +1,26 @@
 <template>
-  <div class="about">
-    <ul :style="gridStyle" class="card-list">
+  <div class="random container">
+    <ul :style="gridStyle" class="random__list">
       <li v-for="(card, index) in random_list" :key="index">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by4">
-              <span class="square" :style="{'background-color': card.color }"></span>
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="content">
-              <p class="title is-6">{{ card.name }} - {{ card.color }} <br> Pantone {{ card.pantone_value }}</p>
-              <p class="subtitle is-7">Year {{ card.year }}</p>
+        <router-link :to="{ path: '/unknown/' + card.id }" :key="card.id">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by4">
+                <span class="square" :style="{'background-color': card.color }"></span>
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <p class="title is-6">
+                  {{ card.name }} - {{ card.color }}
+                  <br />
+                  Pantone {{ card.pantone_value }}
+                </p>
+                <p class="subtitle is-7">Year {{ card.year }}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </router-link>
       </li>
     </ul>
     <b-pagination
@@ -44,20 +50,15 @@ export default {
   data() {
     return {
       numberOfColumns: 3,
-      prevIcon: 'chevron-left',
-      nextIcon: 'chevron-right'
+      prevIcon: "chevron-left",
+      nextIcon: "chevron-right"
     };
   },
   mounted() {
     this.handleData();
   },
   computed: {
-    ...mapGetters("random", [
-        "random_list",
-        "total_pages",
-        "per_page",
-        "page"
-    ]),
+    ...mapGetters("random", ["random_list", "total_pages", "per_page", "page"]),
     gridStyle() {
       return {
         gridTemplateColumns: `repeat(${this.numberOfColumns}, minmax(100px, 1fr))`
@@ -70,7 +71,7 @@ export default {
     },
 
     changePage(page) {
-      console.log(page)
+      console.log(page);
       this.$store.dispatch("random/setPage", page);
     }
   }
@@ -78,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss">
-.card-list {
+.random__list {
   display: grid;
   grid-gap: 1em;
 }
@@ -103,7 +104,6 @@ ul {
 }
 
 .subtitle {
-  margin-top: -0.7rem!important;
+  margin-top: -0.7rem !important;
 }
-
 </style>

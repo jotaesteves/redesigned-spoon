@@ -1,5 +1,5 @@
 import * as types from './mutationTypes'
-import UnknowService from '../services/unknowService'
+import UnknownService from '../services/unknownService'
 import HttpService from '../services/httpService'
 import Vue from 'vue'
 
@@ -36,7 +36,7 @@ const getters = {
 
 const actions = {
     getRandomList (store) {
-        UnknowService.getRandomList({ page: store.state.pagination.page })
+        UnknownService.getRandomList({ page: store.state.pagination.page })
             .then((response) => {
                 store.commit(types.SET_RANDOM_LIST, response.data)
             })

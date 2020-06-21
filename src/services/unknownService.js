@@ -1,6 +1,6 @@
 import HttpService from './httpService';
 
-export default class UnknowService {
+export default class UnknownService {
 
     static async getRandomList(page) {
         return HttpService.get('unknown', page)
