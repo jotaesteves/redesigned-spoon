@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .random__list {
   display: grid;
   grid-gap: 1em;
